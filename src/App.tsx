@@ -7,6 +7,7 @@ import "./assets/styles/global.scss"
 import { Notes } from "./pages/Notes"
 import { Statistics } from "./pages/Statistics"
 import { Search } from "./pages/Search"
+import { CreateBook } from "./pages/CreateBook"
 
 function App() {
     return (
@@ -18,6 +19,7 @@ function App() {
                         <Route path="/notes" element={<Notes />} />
                         <Route path="/statistics" element={<Statistics />} />
                         <Route path="/search" element={<Search />} />
+                        <Route path="/create/book" element={<CreateBook />} />
                     </Routes>
                     <div style={{ height: 73 }} />
                     <TabbarMenu />

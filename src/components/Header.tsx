@@ -1,4 +1,5 @@
 import LeftOutlined from "@ant-design/icons/lib/icons/LeftOutlined"
+import { useNavigate } from "react-router-dom"
 
 type propsInfo = {
     isGoBack?: boolean
@@ -6,9 +7,10 @@ type propsInfo = {
 }
 
 export const Header = ({ isGoBack = true, title = "" }: propsInfo) => {
+    const navigate = useNavigate()
     return (
         <div style={styles.header}>
-            {isGoBack && <LeftOutlined style={styles.iconBack}  />}
+            {isGoBack && <LeftOutlined style={styles.iconBack} onClick={() => navigate(-1)} />}
             <p style={styles.headerText}>{title}</p>
         </div>
     )
