@@ -1,0 +1,93 @@
+.search {
+    .ant-input-group-addon,
+    .ant-input-outlined {
+        border: none;
+        height: 50px;
+    }
+
+    .ant-input-group-addon {
+        border-radius: 20px 0 0 20px;
+        padding-left: 16px;
+    }
+
+    .ant-input-outlined {
+        border-radius: 0 20px 20px 0;
+    }
+
+    .search-icon {
+        font-size: 20px;
+        color: #000;
+    }
+
+    .add-block {
+        margin-top: 17px;
+        .descr {
+            font-weight: 500;
+            font-size: 12px;
+            color: rgba(0, 0, 0, 0.5);
+        }
+
+        .by-input {
+            background: #0281b9;
+            margin-top: 6px;
+            border-radius: 10px;
+            padding: 21px 17px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+
+            .by-inputText {
+                font-weight: 600;
+                font-size: 20px;
+                color: #f9faf8;
+            }
+        }
+    }
+
+    .book-search-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+        margin-top: 30px;
+
+        .book-block {
+            display: flex;
+            flex-direction: row;
+            gap: 20px; 
+            align-items: center;
+            flex: 1;
+
+            box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.25);
+            background: #fff;
+            border-radius: 16px;
+            padding: 16px 20px;
+
+            .book-img {
+                border-radius: 3px;
+                width: 53px;
+                height: 76px;
+                object-fit: contain;
+                object-position: center center;
+            }
+
+            .book-info {
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+
+                .book-title {
+                    font-weight: 600;
+                    font-size: 16px;
+                    color: #000;
+                }
+
+                .book-author {
+                    font-weight: 400;
+                    font-size: 12px;
+                    color: #000;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,53 @@
+.statistic {
+    .calendar {
+        margin-top: 10px;
+
+        article {
+            width: 100%;
+        }
+        svg {
+            margin-left: 0 !important;
+            height: 256px;
+            width: 100%;
+        }
+    }
+    .result-wrapper {
+        border: 0.5px solid #666;
+        border-radius: 20px;
+        padding: 15px 19px;
+        margin-top: 32px;
+
+        .title-result {
+            font-weight: 400;
+            font-size: 18px;
+            color: #000;
+        }
+
+        .year-wrapper {
+            display: flex; 
+            align-items: center; 
+            gap: 13px; 
+
+            .month-name {
+                font-weight: 400;
+                font-size: 18px;
+                color: rgba(0, 0, 0, 0.5);
+            }
+
+            .progress-block {
+                width: 100%;
+                height: 20px;
+                background-color: #ECECEC;
+                border-radius: 10px;
+
+                .progress {
+                    width: 70%; 
+                    height: 100%;
+                    background-color: #00A8F1;
+                    display: block;
+                    border-radius: 10px;
+                }
+            }
+        }
+    }
+}

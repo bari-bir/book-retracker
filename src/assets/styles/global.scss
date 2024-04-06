@@ -23,6 +23,10 @@ h6 {
     margin: 0;
 }
 
+.ant-popover-inner {
+    padding: 0 !important;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

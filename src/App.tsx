@@ -3,6 +3,10 @@ import { App as AntApp } from "antd"
 import { Fuse } from "./components/Fuse"
 import { Home } from "./pages/Home"
 import { TabbarMenu } from "./components/TabbarMenu"
+import "./assets/styles/global.scss"
+import { Notes } from "./pages/Notes"
+import { Statistics } from "./pages/Statistics"
+import { Search } from "./pages/Search"
 
 function App() {
     return (
@@ -11,6 +15,9 @@ function App() {
                 <Fuse>
                     <Routes>
                         <Route path="/" element={<Home />} />
+                        <Route path="/notes" element={<Notes />} />
+                        <Route path="/statistics" element={<Statistics />} />
+                        <Route path="/search" element={<Search />} />
                     </Routes>
                     <div style={{ height: 73 }} />
                     <TabbarMenu />
