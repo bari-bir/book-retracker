@@ -6,49 +6,72 @@ import { BookCard } from "../components/BookCard"
 import "../assets/styles/pages/home.scss"
 import { useNavigate } from "react-router-dom"
 import { Drawer } from "antd"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import KeyWordImg from "../assets/images/keyword.png"
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined"
+import { BooktrackerAPI, bookTrackerInfo, bookStatusList } from "../api/booktrackerApi"
 
 export const Home = () => {
-    const [showDrawer, setShowDrawer] = useState<boolean>(false)
+    const { fetchData: fetchBookTrackerData } = BooktrackerAPI("list")
+    const [bookTrackerInfo, setBookTrackerInfo] = useState<{ [key: string]: bookTrackerInfo[] }>({})
+    const [showDrawer, setShowDrawer] = useState<{
+        status: string
+        isShow: boolean
+    }>({
+        status: "",
+        isShow: false,
+    })
     const navigate = useNavigate()
+
+    useEffect(() => {
+        fetchBookTrackerData({}).then((res) => {
+            if (res.result_code === 0) {
+                setBookTrackerInfo(res.data)
+            }
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const statusLabel = (statusValue: string) => {
+        return bookStatusList.find((bookStatus) => bookStatus.value === statusValue)?.label || ""
+    }
+
+    const statusList = Object.keys(bookTrackerInfo)
+
     return (
         <div className="home container">
-            <div className="home-header">
-                <h3 className="header-text">Reading</h3>
-                <span className="header-icon" onClick={() => setShowDrawer(true)}>
-                    <PlusOutlined />
-                </span>
-            </div>
+            {statusList.map((status, i) => (
+                <div key={i}>
+                    <div className="home-header">
+                        <h3 className="header-text">{statusLabel(status)}</h3>
+                        <span className="header-icon" onClick={() => setShowDrawer({ status, isShow: true })}>
+                            <PlusOutlined />
+                        </span>
+                    </div>
+                    <div>
+                        <Swiper slidesPerView={"auto"} spaceBetween={30}>
+                            {bookTrackerInfo[status].map((booktracker) => (
+                                <SwiperSlide key={booktracker.id}>
+                                    <BookCard {...booktracker} />
+                                </SwiperSlide>
+                            ))}
+                        </Swiper>
+                    </div>
+                </div>
+            ))}
 
-            <div>
-                <Swiper slidesPerView={"auto"} spaceBetween={30}>
-                    <SwiperSlide>
-                        <BookCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <BookCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <BookCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <BookCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                        <BookCard />
-                    </SwiperSlide>
-                </Swiper>
-            </div>
-
-            <Drawer placement="bottom" title="Add a book" closable={false} onClose={() => setShowDrawer(false)} open={showDrawer}>
+            <Drawer
+                placement="bottom"
+                title="Add a book"
+                closable={false}
+                onClose={() => setShowDrawer({ status: "", isShow: false })}
+                open={showDrawer.isShow}>
                 <div className="drawer-block">
-                    <div className="block" onClick={() => navigate("/search")}>
-                        <SearchOutlined className="icon"/>
+                    <div className="block" onClick={() => navigate(`/search?status=${showDrawer.status}`)}>
+                        <SearchOutlined className="icon" />
                         <p className="text">By search</p>
                     </div>
-                    <div className="block" onClick={() => navigate("/create/book")}>
+                    <div className="block" onClick={() => navigate(`/create/book?status=${showDrawer.status}`)}>
                         <img src={KeyWordImg} width="31" height="19" alt="keyword" className="keyWord-img" />
 
                         <p className="text">By input</p>

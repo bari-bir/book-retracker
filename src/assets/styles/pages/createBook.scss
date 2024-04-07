@@ -4,8 +4,9 @@
 
         .image-block {
             position: relative;
-            .cloud-image {
-                object-fit: contain;
+            .book-img {
+                object-fit: cover;
+                object-position: center center;
             }
 
             .close-icon {
