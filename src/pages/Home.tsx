@@ -13,7 +13,7 @@ import { BooktrackerAPI, bookTrackerInfo, bookStatusList } from "../api/booktrac
 
 export const Home = () => {
     const { fetchData: fetchBookTrackerData } = BooktrackerAPI("list")
-    const [bookTrackerInfo, setBookTrackerInfo] = useState<{ [key: string]: bookTrackerInfo[] }>({})
+    const [bookTrackerList, setBookTrackerList] = useState<{ [key: string]: bookTrackerInfo[] }>({})
     const [showDrawer, setShowDrawer] = useState<{
         status: string
         isShow: boolean
@@ -26,7 +26,7 @@ export const Home = () => {
     useEffect(() => {
         fetchBookTrackerData({}).then((res) => {
             if (res.result_code === 0) {
-                setBookTrackerInfo(res.data)
+                setBookTrackerList(res.data)
             }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -36,7 +36,7 @@ export const Home = () => {
         return bookStatusList.find((bookStatus) => bookStatus.value === statusValue)?.label || ""
     }
 
-    const statusList = Object.keys(bookTrackerInfo)
+    const statusList = Object.keys(bookTrackerList)
 
     return (
         <div className="home container">
@@ -50,7 +50,7 @@ export const Home = () => {
                     </div>
                     <div>
                         <Swiper slidesPerView={"auto"} spaceBetween={30}>
-                            {bookTrackerInfo[status].map((booktracker) => (
+                            {bookTrackerList[status].map((booktracker) => (
                                 <SwiperSlide key={booktracker.id}>
                                     <BookCard {...booktracker} />
                                 </SwiperSlide>
