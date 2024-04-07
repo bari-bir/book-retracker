@@ -1,0 +1,122 @@
+.book-detail {
+    position: relative;
+    height: calc(100vh - 74px);
+
+    .timer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .ant-progress-inner {
+            width: 211px !important;
+            height: 211px !important;
+        }
+
+        .action-block {
+            border: 1px solid #005479;
+            border-radius: 100%;
+            display: grid;
+            place-content: center;
+            padding: 6px;
+
+            span {
+                display: grid;
+                place-content: center;
+                background-color: #60b4d9;
+                height: 41px;
+                width: 41px;
+                border-radius: 100%;
+
+                .img-timer {
+                    width: 20px;
+                    height: 20px;
+                    object-fit: contain;
+                    object-position: center center;
+                }
+            }
+        }
+
+        .timer-text {
+            font-weight: 400;
+            font-size: 23px;
+            color: #000;
+        }
+    }
+
+    .book-card {
+        position: absolute;
+        bottom: 32px;
+        width: calc(100% - 32px);
+        padding: 12px 17px;
+        background: #005479;
+        border-radius: 24px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+
+        .book-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .book-img {
+                border-radius: 10px;
+                width: 58px;
+                height: 87px;
+                object-fit: cover;
+                object-position: center center;
+            }
+
+            .book-text-block {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+
+                .book-title {
+                    font-weight: 600;
+                    font-size: 20px;
+                    color: #f8f8f8;
+                }
+
+                .book-page {
+                    font-weight: 500;
+                    font-size: 16px;
+                    color: #f8f8f8;
+                }
+            }
+        }
+
+        .actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+
+            .more-icon {
+                position: absolute;
+                top: 7px;
+                right: 18px;
+                transform: rotate(90deg);
+                font-size: 33px;
+                color: #fff;
+            }
+
+            .notes-add-icon {
+                border-radius: 45px;
+                width: 42px;
+                height: 42px;
+                background-color: #fff;
+                display: grid;
+                place-content: center;
+
+                .notes-add-img {
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+        }
+    }
+}

@@ -8,6 +8,7 @@ import { Notes } from "./pages/Notes"
 import { Statistics } from "./pages/Statistics"
 import { Search } from "./pages/Search"
 import { CreateBook } from "./pages/CreateBook"
+import { BookDetail } from "./pages/BookDetail"
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                         <Route path="/statistics" element={<Statistics />} />
                         <Route path="/search" element={<Search />} />
                         <Route path="/create/book" element={<CreateBook />} />
+                        <Route path="/book-detail/:id" element={<BookDetail />} />
                     </Routes>
                     <div style={{ height: 73 }} />
                     <TabbarMenu />
