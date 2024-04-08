@@ -240,6 +240,23 @@ export const BookDetail = () => {
                     <p>Delete the book ?</p>
                 </div>
             </Modal>
+            {/* <Modal
+                className="modal-notes"
+                open={warningShow}
+                onCancel={() => setWarningShow(false)}
+                footer={[
+                    <Button className="cancel-btn" key="cancel" onClick={() => setWarningShow(false)}>
+                        Cancel
+                    </Button>,
+                    <Button className="confirm-btn" key="yes" onClick={() => onDeleteBook()}>
+                        Delete
+                    </Button>,
+                ]}>
+                <div className="warning-icon">
+                    <img src={WarningImg} className="warning-img" alt="test" />
+                    <p>Delete the book ?</p>
+                </div>
+            </Modal> */}
         </div>
     )
 }

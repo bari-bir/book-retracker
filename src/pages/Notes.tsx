@@ -17,7 +17,10 @@ export const Notes = () => {
                         iure aut quo nihil tempore beatae, quaerat error, commodi optio aliquam facilis aperiam eum!
                     </p>
 
-                    <Popover content={EditDeletePopover}  placement="bottomLeft" trigger="click">
+                    <Popover
+                        content={() => EditDeletePopover({ onDelete: () => console.log("test"), onEdit: () => console.log("edit") })}
+                        placement="bottomLeft"
+                        trigger="click">
                         <MoreOutlined className="more-icon" />
                     </Popover>
                 </div>
