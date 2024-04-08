@@ -1,4 +1,4 @@
-import { App, Button, ConfigProvider, Drawer, Popover, Progress, Slider } from "antd"
+import { App, Button, ConfigProvider, Drawer, Modal, Popover, Progress, Slider } from "antd"
 import { Header } from "../components/Header"
 import Player from "../assets/images/player.png"
 import Pause from "../assets/images/pause.png"
@@ -7,18 +7,24 @@ import "../assets/styles/pages/bookDetail.scss"
 import { MoreOutlined } from "@ant-design/icons"
 import { EditDeletePopover } from "../components/EditDeletePopover"
 import NotesAddImg from "../assets/images/notes-add.png"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { BooktrackerAPI, bookTrackerInfo } from "../api/booktrackerApi"
+import WarningImg from "../assets/images/warning.png"
 import { CloudImage } from "../components/CloudImage"
 
 export const BookDetail = () => {
+    const navigate = useNavigate()
     const { id } = useParams()
     const { fetchData: fetchBookTrackerInfoData } = BooktrackerAPI("get")
     const { fetchData: fetchSaveBookTrackerData } = BooktrackerAPI("focus")
+    const { fetchData: fetchSaveBookTrackerDeleteData } = BooktrackerAPI("delete")
     const { message } = App.useApp()
     const [isActive, setIsActive] = useState<boolean>(false)
     const [isSave, setIsSave] = useState(false)
-    const [showDrawer, setShowDrawer] = useState<boolean>(false)
+    const [saveShow, setSaveShow] = useState<boolean>(false)
+    const [drawerShow, setDrawerShow] = useState<boolean>(false)
+    const [warningShow, setWarningShow] = useState<boolean>(false)
+    const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
     const [timer, setTimer] = useState<number>(0)
     const [readPage, setReadPage] = useState<number>(0)
     const [bookTrackerInfo, setBookTrackerInfo] = useState<bookTrackerInfo | null>(null)
@@ -31,6 +37,7 @@ export const BookDetail = () => {
                 const booktrackerData: bookTrackerInfo = JSON.parse(JSON.stringify(res.data))
                 setBookTrackerInfo(booktrackerData)
                 setReadPage(booktrackerData?.progressPage || 0)
+                setTimer(Math.floor((booktrackerData?.time || 0) / 10))
             }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -39,7 +46,7 @@ export const BookDetail = () => {
     useEffect(() => {
         let intervalId: number
         if (isActive) {
-            intervalId = setInterval(() => setTimer(timer + 1), 1000)
+            intervalId = setInterval(() => setTimer(timer + 1), 10)
         }
         return () => clearInterval(intervalId)
     }, [isActive, timer])
@@ -48,8 +55,41 @@ export const BookDetail = () => {
         setIsActive((isActive) => (isActive = !isActive))
     }
 
-    const minutes: number = Math.floor((timer % 3600) / 600)
-    const milliseconds: number = timer * 1000
+    const timeText = (time: number) => {
+        if (time >= 10) {
+            return time
+        } else {
+            return `0${time}`
+        }
+    }
+
+    const onGoBack = () => {
+        if (isSave) {
+            return true
+        } else {
+            setSaveShow(true)
+            return false
+        }
+    }
+
+    const onDeleteBook = () => {
+        fetchSaveBookTrackerDeleteData({
+            id,
+        }).then((res) => {
+            if (res.result_code === 0) {
+                message.success("Deleted")
+                navigate("/")
+            }
+        })
+    }
+
+    const onEdit = () => {
+        navigate(`/create-book/${id}`)
+    }
+
+    const minutes: number = Math.floor((timer % 360000) / 6000)
+    const seconds: number = Math.floor((timer % 6000) / 100)
+    const milliseconds: number = timer % 100
 
     const onSave = () => {
         setIsActive(false)
@@ -57,12 +97,12 @@ export const BookDetail = () => {
 
         fetchSaveBookTrackerData({
             bookTrackerId: id,
-            time: milliseconds,
+            time: timer * 10,
             page: readPage,
         }).then((res) => {
             if (res.result_code === 0) {
                 setIsSave(true)
-                setShowDrawer(false);
+                setDrawerShow(false)
                 message.success("Saved")
             }
         })
@@ -70,12 +110,17 @@ export const BookDetail = () => {
 
     return (
         <div className="container book-detail">
-            <Header />
-            <div className="btn-save" onClick={() => setShowDrawer(true)}>
+            <Header isAcceptGoBack={onGoBack} />
+            <div className="btn-save" onClick={() => setDrawerShow(true)}>
                 Save
             </div>
             <div className="timer">
-                <Progress type="dashboard" percent={100} format={() => `${minutes}:${timer}`} strokeColor={{ "100%": "#005479", "0%": "#005479" }} />
+                <Progress
+                    type="dashboard"
+                    percent={100}
+                    format={() => (minutes !== 0 ? `${timeText(minutes)}:${timeText(seconds)}` : `${timeText(seconds)}:${timeText(milliseconds)}`)}
+                    strokeColor={{ "100%": "#005479", "0%": "#005479" }}
+                />
 
                 <div className="timer" onClick={() => togglePlayer()}>
                     <div className="action-block">
@@ -104,8 +149,21 @@ export const BookDetail = () => {
                 </div>
                 <div className="actions">
                     <div style={{ width: 42, margin: "0 auto" }}>
-                        <Popover content={EditDeletePopover} placement="bottomLeft" trigger="click">
-                            <MoreOutlined className="more-icon" />
+                        <Popover
+                            open={popoverOpen}
+                            content={() =>
+                                EditDeletePopover({
+                                    onDelete: () => {
+                                        setWarningShow(true)
+                                        setPopoverOpen(false)
+                                    },
+                                    onEdit,
+                                })
+                            }
+                            onOpenChange={(e) => setPopoverOpen(e)}
+                            placement="bottomLeft"
+                            trigger="click">
+                            <MoreOutlined className="more-icon" onClick={() => setPopoverOpen(true)} />
                         </Popover>
                     </div>
                     <div className="notes-add-icon">
@@ -114,7 +172,7 @@ export const BookDetail = () => {
                 </div>
             </div>
 
-            <Drawer placement="bottom" title="How much page" closable={false} onClose={() => setShowDrawer(false)} open={showDrawer}>
+            <Drawer placement="bottom" title="How many page" closable={false} onClose={() => setDrawerShow(false)} open={drawerShow}>
                 <div className="drawer-save-block">
                     <p className="page-number">{readPage}</p>
                     <ConfigProvider
@@ -130,19 +188,58 @@ export const BookDetail = () => {
                                 },
                             },
                         }}>
-                        <Slider max={bookTrackerInfo?.page || 0} onChange={(e) => setReadPage(e)} />
+                        <Slider max={bookTrackerInfo?.page || 0} onChange={(e) => setReadPage(e)} value={readPage} />
                     </ConfigProvider>
 
                     <div className="actions">
                         <Button className="save-changes-btn" type="primary" onClick={() => onSave()}>
                             Save changes
                         </Button>
-                        <p className="cancel-name" onClick={() => setIsSave(false)}>
+                        <p
+                            className="cancel-name"
+                            onClick={() => {
+                                setDrawerShow(false)
+                                setIsSave(false)
+                            }}>
                             Cancel
                         </p>
                     </div>
                 </div>
             </Drawer>
+            <Modal
+                className="modal-warning"
+                open={saveShow}
+                onCancel={() => setSaveShow(false)}
+                footer={[
+                    <Button className="cancel-btn" key="cancel" onClick={() => setSaveShow(false)}>
+                        Cancel
+                    </Button>,
+                    <Button className="confirm-btn" key="yes" onClick={() => navigate(-1)}>
+                        Yes
+                    </Button>,
+                ]}>
+                <div className="warning-icon">
+                    <img className="warning-img" src={WarningImg} alt="test" />
+                    <p>Without saving?</p>
+                </div>
+            </Modal>
+            <Modal
+                className="modal-warning"
+                open={warningShow}
+                onCancel={() => setWarningShow(false)}
+                footer={[
+                    <Button className="cancel-btn" key="cancel" onClick={() => setWarningShow(false)}>
+                        Cancel
+                    </Button>,
+                    <Button className="confirm-btn" key="yes" onClick={() => onDeleteBook()}>
+                        Delete
+                    </Button>,
+                ]}>
+                <div className="warning-icon">
+                    <img src={WarningImg} className="warning-img" alt="test" />
+                    <p>Delete the book ?</p>
+                </div>
+            </Modal>
         </div>
     )
 }

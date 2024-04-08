@@ -71,7 +71,7 @@ export const Home = () => {
                         <SearchOutlined className="icon" />
                         <p className="text">By search</p>
                     </div>
-                    <div className="block" onClick={() => navigate(`/create/book?status=${showDrawer.status}`)}>
+                    <div className="block" onClick={() => navigate(`/create-book/add?status=${showDrawer.status}`)}>
                         <img src={KeyWordImg} width="31" height="19" alt="keyword" className="keyWord-img" />
 
                         <p className="text">By input</p>

@@ -3,7 +3,7 @@ import { Header } from "../components/Header"
 import "../assets/styles/pages/createBook.scss"
 import { InputStyle } from "../components/InputStyle"
 import { App, Button, Input, Select } from "antd"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useCallback, useEffect, useState } from "react"
 import { bookStatusList, BooktrackerAPI } from "../api/booktrackerApi"
 import { CloudImage } from "../components/CloudImage"
@@ -25,7 +25,9 @@ const _infoTemp = {
 }
 
 export const CreateBook = () => {
+    const { id } = useParams()
     const { fetchData: fetchSaveBookTrackerData } = BooktrackerAPI("create")
+    const { fetchData: fetchGetBookTrackerData } = BooktrackerAPI("get")
     const { message } = App.useApp()
     const navigate = useNavigate()
     const location = useLocation()
@@ -39,6 +41,23 @@ export const CreateBook = () => {
     const handlePostMessageListener = useCallback((message: MessageEvent) => {
         const image = message.data.url
         setInfo((info) => ({ ...info, image }))
+    }, [])
+
+    useEffect(() => {
+        if (id !== "add") {
+            fetchGetBookTrackerData({
+                id,
+            }).then((res) => {
+                if (res.result_code === 0) {
+                    const bookTracker: bookInfo = JSON.parse(JSON.stringify(res.data))
+                    setInfo({
+                        ..._infoTemp,
+                        ...bookTracker,
+                    })
+                }
+            })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {

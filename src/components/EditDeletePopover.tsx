@@ -1,22 +1,27 @@
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons"
 
-export const EditDeletePopover = () => {
+type propsInfo = {
+    onEdit: () => void
+    onDelete: () => void
+}
+
+export const EditDeletePopover = ({ onDelete, onEdit }: propsInfo) => {
     return (
         <div style={stylesEditDeletePopover.popoverWrapper}>
-            <div style={stylesEditDeletePopover.popoverBlock}>
+            <div style={stylesEditDeletePopover.popoverBlock} onClick={() => onEdit()}>
                 <p style={stylesEditDeletePopover.popoverText}>Edit</p>
-                <EditOutlined style={stylesEditDeletePopover.icon}/>
+                <EditOutlined style={stylesEditDeletePopover.icon} />
             </div>
-            <div style={{...stylesEditDeletePopover.popoverBlock, borderBottom: "none"}}>
+            <div style={{ ...stylesEditDeletePopover.popoverBlock, borderBottom: "none" }} onClick={() => onDelete()}>
                 <p style={stylesEditDeletePopover.popoverText}>Delete</p>
-                <DeleteOutlined style={stylesEditDeletePopover.icon}/>
+                <DeleteOutlined style={stylesEditDeletePopover.icon} />
             </div>
         </div>
     )
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const  stylesEditDeletePopover: { [key: string]: React.CSSProperties } = {
+export const stylesEditDeletePopover: { [key: string]: React.CSSProperties } = {
     popoverWrapper: {
         borderRadius: 13,
         padding: "13px 0",
@@ -29,18 +34,17 @@ export const  stylesEditDeletePopover: { [key: string]: React.CSSProperties } = 
         alignItems: "center",
         justifyContent: "space-between",
         gap: 10,
-        borderBottom: "0.5px solid rgba(60, 60, 67, 0.36)"
+        borderBottom: "0.5px solid rgba(60, 60, 67, 0.36)",
     },
     popoverText: {
         paddingLeft: 16,
         fontWeight: 400,
         fontSize: 17,
-        lineHeight: 20,
         color: "#000",
     },
     icon: {
         paddingRight: 16,
-        fontSize: 24, 
+        fontSize: 24,
         color: "#000",
-    }
+    },
 }

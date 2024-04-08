@@ -20,7 +20,7 @@ function App() {
                         <Route path="/notes" element={<Notes />} />
                         <Route path="/statistics" element={<Statistics />} />
                         <Route path="/search" element={<Search />} />
-                        <Route path="/create/book" element={<CreateBook />} />
+                        <Route path="/create-book/:id" element={<CreateBook />} />
                         <Route path="/book-detail/:id" element={<BookDetail />} />
                     </Routes>
                     <div style={{ height: 73 }} />

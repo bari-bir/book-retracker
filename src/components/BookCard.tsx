@@ -12,7 +12,7 @@ export const BookCard = ({ id, image }: propsInfo) => {
     const navigate = useNavigate()
     return (
         <div className="book-wrapper" onClick={() => navigate(`/book-detail/${id}`)}>
-            <CloudImage isPreview={false} className="book-img" url={image} height="100%"/>
+            <CloudImage isPreview={false} className="book-img" url={image} height="100%" width="100%" />
 
             <div className="icon-wrapper">
                 <PlayCircleOutlined className="book-icon" onClick={() => navigate(`/book-detail/${id}`)} />

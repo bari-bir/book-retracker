@@ -1,6 +1,6 @@
 .book-wrapper {
     border-radius: 33px;
-    width: 195px;
+    width: 100%;
     height: 295px;
     box-shadow: 0 9px 9px 0 rgba(0, 0, 0, 0.25);
     position: relative;
@@ -28,7 +28,6 @@
         gap: 13px;
 
         .book-icon {
-            
             font-size: 20px;
             color: #f24e1e;
         }
