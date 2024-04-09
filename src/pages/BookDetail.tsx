@@ -11,12 +11,15 @@ import { useNavigate, useParams } from "react-router-dom"
 import { BooktrackerAPI, bookTrackerInfo } from "../api/booktrackerApi"
 import WarningImg from "../assets/images/warning.png"
 import { CloudImage } from "../components/CloudImage"
+import TextArea from "antd/es/input/TextArea"
+import { NotesAPI } from "../api/notesApi"
 
 export const BookDetail = () => {
     const navigate = useNavigate()
     const { id } = useParams()
     const { fetchData: fetchBookTrackerInfoData } = BooktrackerAPI("get")
     const { fetchData: fetchSaveBookTrackerData } = BooktrackerAPI("focus")
+    const { fetchData: fetchNoteCreateDataq } = NotesAPI("create")
     const { fetchData: fetchSaveBookTrackerDeleteData } = BooktrackerAPI("delete")
     const { message } = App.useApp()
     const [isActive, setIsActive] = useState<boolean>(false)
@@ -24,10 +27,12 @@ export const BookDetail = () => {
     const [saveShow, setSaveShow] = useState<boolean>(false)
     const [drawerShow, setDrawerShow] = useState<boolean>(false)
     const [warningShow, setWarningShow] = useState<boolean>(false)
+    const [notesShow, setNotesShow] = useState<boolean>(false)
     const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
     const [timer, setTimer] = useState<number>(0)
     const [readPage, setReadPage] = useState<number>(0)
     const [bookTrackerInfo, setBookTrackerInfo] = useState<bookTrackerInfo | null>(null)
+    const [notesContent, setNotesContent] = useState<string>("")
 
     useEffect(() => {
         fetchBookTrackerInfoData({
@@ -85,6 +90,17 @@ export const BookDetail = () => {
 
     const onEdit = () => {
         navigate(`/create-book/${id}`)
+    }
+
+    const onSaveNote = () => {
+        fetchNoteCreateDataq({
+            content: notesContent,
+            bookId: bookTrackerInfo?.book.id,
+        }).then((res) => {
+            if (res.result_code === 0) {
+                navigate("/notes")
+            }
+        })
     }
 
     const minutes: number = Math.floor((timer % 360000) / 6000)
@@ -166,7 +182,7 @@ export const BookDetail = () => {
                             <MoreOutlined className="more-icon" onClick={() => setPopoverOpen(true)} />
                         </Popover>
                     </div>
-                    <div className="notes-add-icon">
+                    <div className="notes-add-icon" onClick={() => setNotesShow(true)}>
                         <img src={NotesAddImg} className="notes-add-img" alt="notes" />
                     </div>
                 </div>
@@ -206,6 +222,7 @@ export const BookDetail = () => {
                     </div>
                 </div>
             </Drawer>
+            {/* save modal */}
             <Modal
                 className="modal-warning"
                 open={saveShow}
@@ -223,6 +240,7 @@ export const BookDetail = () => {
                     <p>Without saving?</p>
                 </div>
             </Modal>
+            {/* book delete modal */}
             <Modal
                 className="modal-warning"
                 open={warningShow}
@@ -240,23 +258,28 @@ export const BookDetail = () => {
                     <p>Delete the book ?</p>
                 </div>
             </Modal>
-            {/* <Modal
-                className="modal-notes"
-                open={warningShow}
-                onCancel={() => setWarningShow(false)}
+            {/* notes modal */}
+            <Modal
+                className="modal-warning modal-notes"
+                closeIcon={null}
+                open={notesShow}
+                onCancel={() => setNotesShow(false)}
                 footer={[
-                    <Button className="cancel-btn" key="cancel" onClick={() => setWarningShow(false)}>
+                    <Button className="cancel-btn" key="cancel" onClick={() => setNotesShow(false)}>
                         Cancel
                     </Button>,
-                    <Button className="confirm-btn" key="yes" onClick={() => onDeleteBook()}>
-                        Delete
+                    <Button className="confirm-btn" key="yes" onClick={() => onSaveNote()}>
+                        Save
                     </Button>,
                 ]}>
-                <div className="warning-icon">
-                    <img src={WarningImg} className="warning-img" alt="test" />
-                    <p>Delete the book ?</p>
+                <div>
+                    <TextArea
+                        placeholder="type  a  notes here ..."
+                        className="text-area"
+                        value={notesContent}
+                        onChange={(e) => setNotesContent(e.target.value)}></TextArea>
                 </div>
-            </Modal> */}
+            </Modal>
         </div>
     )
 }
