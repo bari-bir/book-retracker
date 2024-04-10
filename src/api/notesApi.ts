@@ -6,6 +6,7 @@ export type noteInfo = {
     book: bookInfo
     content: string
     bookId: string
+    userId: string
 }
 
 interface INotes extends IResponse {
