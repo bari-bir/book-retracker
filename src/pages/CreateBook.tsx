@@ -7,8 +7,10 @@ import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useCallback, useEffect, useState } from "react"
 import { bookStatusList, BooktrackerAPI } from "../api/booktrackerApi"
 import { CloudImage } from "../components/CloudImage"
+import { BookAPI } from "../api/bookApi"
 
 type bookInfo = {
+    imageLink?: string
     title: string
     author: string
     status: string | null
@@ -28,11 +30,13 @@ export const CreateBook = () => {
     const { id } = useParams()
     const { fetchData: fetchSaveBookTrackerData } = BooktrackerAPI("create")
     const { fetchData: fetchGetBookTrackerData } = BooktrackerAPI("get")
+    const { fetchData: fetchGetBookData } = BookAPI("get")
     const { message } = App.useApp()
     const navigate = useNavigate()
     const location = useLocation()
     const queryParams = new URLSearchParams(location.search)
     const statusType = queryParams.get("status")
+    const bookId = queryParams.get("bookId")
     const [info, setInfo] = useState<bookInfo>({
         ..._infoTemp,
         status: statusType,
@@ -44,7 +48,7 @@ export const CreateBook = () => {
     }, [])
 
     useEffect(() => {
-        if (id !== "add") {
+        if (id !== "add" && id !== "book") {
             fetchGetBookTrackerData({
                 id,
             }).then((res) => {
@@ -54,6 +58,15 @@ export const CreateBook = () => {
                         ..._infoTemp,
                         ...bookTracker,
                     })
+                }
+            })
+        } else if (id === "book" && bookId) {
+            fetchGetBookData({
+                id: bookId,
+            }).then((res) => {
+                if (res.result_code === 0) {
+                    const bookInfo: { book: bookInfo } = JSON.parse(JSON.stringify(res.data))
+                    setInfo({ ...bookInfo.book, image: bookInfo.book.imageLink || "" })
                 }
             })
         }

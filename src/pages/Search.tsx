@@ -13,11 +13,11 @@ export const Search = () => {
     const navigate = useNavigate()
     const { fetchData: fetchBookData } = BookAPI("list")
     const [search, setSearch] = useState<string>("")
-    const ref = useRef<InputRef>(null);
+    const ref = useRef<InputRef>(null)
     const [dataList, setDataList] = useState<bookInfo[]>([])
 
     const onSearch = () => {
-        ref.current?.blur();
+        ref.current?.blur()
         fetchBookData({
             title: search,
         }).then((res) => {
@@ -64,7 +64,7 @@ export const Search = () => {
             <div className="book-search-wrapper">
                 {dataList.length ? (
                     dataList.map((item) => (
-                        <div className="book-block" key={item.id} onClick={() => navigate(`/book-detail/${item.id}`)}>
+                        <div className="book-block" key={item.id} onClick={() => navigate(`/create-book/book?bookId=${item.id}`)}>
                             <CloudImage url={item.imageLink} className="book-img" width={53} height={76} />
 
                             <div className="book-info">
