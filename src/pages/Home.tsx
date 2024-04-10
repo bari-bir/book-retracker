@@ -39,17 +39,17 @@ export const Home = () => {
     const statusList = Object.keys(bookTrackerList)
 
     return (
-        <div className="home container">
+        <div className="home">
             {statusList.map((status, i) => (
                 <div key={i}>
-                    <div className="home-header">
+                    <div className="container home-header">
                         <h3 className="header-text">{statusLabel(status)}</h3>
                         <span className="header-icon" onClick={() => setShowDrawer({ status, isShow: true })}>
                             <PlusOutlined />
                         </span>
                     </div>
-                    <div>
-                        <Swiper slidesPerView={"auto"} spaceBetween={30}>
+                    <div style={{ width: "100%" }}>
+                        <Swiper slidesPerView={"auto"} spaceBetween={10}>
                             {bookTrackerList[status].map((booktracker) => (
                                 <SwiperSlide key={booktracker.id}>
                                     <BookCard {...booktracker} />
