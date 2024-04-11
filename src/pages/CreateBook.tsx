@@ -29,6 +29,7 @@ const _infoTemp = {
 export const CreateBook = () => {
     const { id } = useParams()
     const { fetchData: fetchSaveBookTrackerData } = BooktrackerAPI("create")
+    const { fetchData: fetchUpdateBookTrackerData } = BooktrackerAPI("update")
     const { fetchData: fetchGetBookTrackerData } = BooktrackerAPI("get")
     const { fetchData: fetchGetBookData } = BookAPI("get")
     const { message } = App.useApp()
@@ -48,7 +49,7 @@ export const CreateBook = () => {
     }, [])
 
     useEffect(() => {
-        if (id !== "add" && id !== "book") {
+        if (isNotAddBook()) {
             fetchGetBookTrackerData({
                 id,
             }).then((res) => {
@@ -80,6 +81,10 @@ export const CreateBook = () => {
         }
     }, [handlePostMessageListener])
 
+    const isNotAddBook = () => {
+        return id !== "add" && id !== "book"
+    }
+
     const onChangePage = (value: string) => {
         const pageNumber = parseInt(value)
 
@@ -102,14 +107,25 @@ export const CreateBook = () => {
         setInfo({ ...info, image: "" })
     }
 
-    const onSubmit = () => {
-        fetchSaveBookTrackerData(info).then((res) => {
-            if (res.result_code === 0) {
-                message.success("Successfuly created book")
-                setInfo(_infoTemp)
-                navigate("/")
-            }
-        })
+    const onSubmit = async () => {
+        if (isNotAddBook()) {
+            await fetchUpdateBookTrackerData({
+                id,
+                ...info,
+            }).then((res) => {
+                if (res.result_code === 0) {
+                    setInfo(_infoTemp)
+                }
+            })
+        } else {
+            await fetchSaveBookTrackerData(info).then((res) => {
+                if (res.result_code === 0) {
+                    setInfo(_infoTemp)
+                }
+            })
+        }
+        navigate("/")
+        message.success("Successfuly created book")
     }
 
     return (
@@ -117,7 +133,7 @@ export const CreateBook = () => {
             <Header title="Add a book" />
 
             <div className="dragger">
-                {info.image.length ? (
+                {info.image?.length ? (
                     <div className="image-block">
                         <CloudImage url={info.image} width="100%" height={142} className="book-img" />
                         <CloseOutlined className="close-icon" onClick={(e) => onDeleteImage(e)} />
