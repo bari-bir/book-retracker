@@ -35,7 +35,12 @@ export const BookDetail = () => {
     const [notesContent, setNotesContent] = useState<string>("")
 
     useEffect(() => {
-        fetchBookTrackerInfoData({
+        loadData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    const loadData = async () => {
+        await fetchBookTrackerInfoData({
             id,
         }).then((res) => {
             if (res.result_code === 0) {
@@ -45,8 +50,7 @@ export const BookDetail = () => {
                 setTimer(Math.floor((booktrackerData?.time || 0) / 10))
             }
         })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }
 
     useEffect(() => {
         let intervalId: number
@@ -119,6 +123,7 @@ export const BookDetail = () => {
             if (res.result_code === 0) {
                 setIsSave(true)
                 setDrawerShow(false)
+                loadData()
                 message.success("Saved")
             }
         })
