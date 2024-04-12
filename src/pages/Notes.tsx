@@ -16,10 +16,12 @@ export const Notes = () => {
 
     const [dataList, setDataList] = useState<noteInfo[]>([])
     const [info, setInfo] = useState<{
+        id: string
         userId: string
         bookId: string
         content: string
     }>({
+        id: "",
         userId: "",
         bookId: "",
         content: "",
@@ -38,8 +40,8 @@ export const Notes = () => {
         })
     }
 
-    const onDeleteNote = (id: string) => {        
-        setPopoverOpen(false);
+    const onDeleteNote = (id: string) => {
+        setPopoverOpen(false)
         if (!id.length) return
         fetchDeleteNoteData({
             id,
@@ -52,8 +54,9 @@ export const Notes = () => {
     }
 
     const onEditNotes = (note: noteInfo) => {
-        setPopoverOpen(false);
+        setPopoverOpen(false)
         setInfo({
+            id: note.id,
             bookId: note.bookId,
             userId: note.userId,
             content: note.content,
@@ -66,6 +69,7 @@ export const Notes = () => {
             if (res.result_code === 0) {
                 message.success("updated")
                 loadData()
+                setNotesShow(false)
             }
         })
     }
