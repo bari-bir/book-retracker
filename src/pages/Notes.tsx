@@ -1,5 +1,4 @@
 import MoreOutlined from "@ant-design/icons/lib/icons/MoreOutlined"
-import { Header } from "../components/Header"
 import "../assets/styles/pages/notes.scss"
 import { Button, Empty, message, Modal, Popover } from "antd"
 import { EditDeletePopover } from "../components/EditDeletePopover"
@@ -76,7 +75,6 @@ export const Notes = () => {
 
     return (
         <div className="container notes">
-            <Header title="Notes" isGoBack={false} />
 
             <div className="notes-wrapper">
                 {dataList.length ? (

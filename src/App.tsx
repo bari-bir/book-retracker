@@ -13,7 +13,7 @@ import { BookDetail } from "./pages/BookDetail"
 function App() {
     return (
         <AntApp message={{ top: 30 }}>
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%"}}>
                 <Fuse>
                     <Routes>
                         <Route path="/" element={<Home />} />

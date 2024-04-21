@@ -46,8 +46,8 @@ export const BookDetail = () => {
             if (res.result_code === 0) {
                 const booktrackerData: bookTrackerInfo = JSON.parse(JSON.stringify(res.data))
                 setBookTrackerInfo(booktrackerData)
-                setReadPage(booktrackerData?.progressPage || 0)
-                setTimer(Math.floor((booktrackerData?.time || 0) / 10))
+                // setReadPage(booktrackerData?.progressPage || 0)
+                // setTimer(Math.floor((booktrackerData?.time || 0) / 10))
             }
         })
     }
@@ -140,7 +140,7 @@ export const BookDetail = () => {
                     type="dashboard"
                     percent={100}
                     format={() => (minutes !== 0 ? `${timeText(minutes)}:${timeText(seconds)}` : `${timeText(seconds)}:${timeText(milliseconds)}`)}
-                    strokeColor={{ "100%": "#005479", "0%": "#005479" }}
+                    strokeColor={{ "100%": "#0a78d6", "0%": "#60b4d9" }}
                 />
 
                 <div className="timer" onClick={() => togglePlayer()}>
@@ -200,11 +200,11 @@ export const BookDetail = () => {
                         theme={{
                             components: {
                                 Slider: {
-                                    trackBg: "#fff",
+                                    trackBg: "#0a78d6",
                                     handleActiveColor: "#fff",
                                     handleColor: "#fff",
                                     railSize: 10,
-                                    railBg: "#848484",
+                                    railBg: "#6d7885",
                                     handleLineWidth: 8,
                                 },
                             },

@@ -1,8 +1,7 @@
 import { useRef, useState } from "react"
-import { Header } from "../components/Header"
 import { SearchOutlined } from "@ant-design/icons"
 import { ConfigProvider, Input, InputRef } from "antd"
-import KeyWordImg from "../assets/images/keyword.png"
+import KeyWordImg from "../assets/images/keyword-white.png"
 import "../assets/styles/pages/search.scss"
 import { BookAPI } from "../api/bookApi"
 import { bookInfo } from "../api/booktrackerApi"
@@ -29,7 +28,6 @@ export const Search = () => {
 
     return (
         <div className="container search">
-            <Header isGoBack={false} title="Search the book" />
 
             <div>
                 <ConfigProvider
@@ -83,9 +81,9 @@ export const Search = () => {
 
 const styles = {
     searchInput: {
-        colorBgContainer: "#f2f2ee",
+        colorBgContainer: "#fff",
         activeBorderColor: "transparent",
-        addonBg: "#f2f2ee",
+        addonBg: "#fff",
         paddingBlock: 9,
         paddingInline: 10,
         hoverBorderColor: "transparent",

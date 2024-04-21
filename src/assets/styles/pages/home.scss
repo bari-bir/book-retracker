@@ -33,7 +33,6 @@
     .swiper-slide {
         text-align: center;
         font-size: 18px;
-        background: #fff;
         margin: 10px 0 30px 0;
         /* Center slide text vertically */
         display: flex;
@@ -58,11 +57,11 @@
 
     .ant-drawer-content {
         border-radius: 50px 50px 0 0;
-        background: #005479;
+        background: #fff;
     }
 
     .ant-drawer-title {
-        color: #fff;
+        color: #212121;
         text-align: center;
     }
 }
@@ -75,14 +74,14 @@
         align-items: center;
         .icon {
             font-size: 31px;
-            color: #fff;
+            color: #212121;
         }
 
         .text {
             flex: 1;
             font-weight: 600;
             font-size: 20px;
-            color: #f9faf8;
+            color: #212121;
         }
     }
 }

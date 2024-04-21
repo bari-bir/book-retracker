@@ -7,9 +7,12 @@
         top: 0px;
         right: 0;
         padding: 5px 15px;
-        background: #ffed4a;
+        background: #0a78d6;
+        color: #fff;
         border-radius: 4px;
-        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+        box-shadow:
+            0px 0px 2px 0px rgba(0, 0, 0, 0.03),
+            0px 0px 2px 0px rgba(0, 0, 0, 0.06);
     }
 
     .timer {
@@ -26,13 +29,13 @@
             .ant-progress-text {
                 font-weight: 500;
                 font-size: 44px;
-                color: #000;
+                color: #212121;
             }
         }
 
         .action-block {
             margin-top: -30px;
-            border: 3px solid #005479;
+            border: 3px solid #0a78d6;
             border-radius: 100%;
             display: grid;
             place-content: center;
@@ -60,7 +63,7 @@
         .timer-text {
             font-weight: 400;
             font-size: 23px;
-            color: #000;
+            color: #212121;
         }
     }
 
@@ -69,12 +72,15 @@
         bottom: 32px;
         width: calc(100% - 32px);
         padding: 12px 17px;
-        background: #005479;
-        border-radius: 24px;
+        background: #fff;
+        border-radius: 12px;
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         gap: 10px;
+        box-shadow:
+        0px 0px 2px 0px rgba(0, 0, 0, 0.03),
+        0px 0px 2px 0px rgba(0, 0, 0, 0.06);
 
         .book-info {
             display: flex;
@@ -97,13 +103,13 @@
                 .book-title {
                     font-weight: 600;
                     font-size: 20px;
-                    color: #f8f8f8;
+                    color: #212121;
                 }
 
                 .book-page {
                     font-weight: 500;
                     font-size: 16px;
-                    color: #f8f8f8;
+                    color: #212121;
                 }
             }
         }
@@ -121,7 +127,7 @@
                 right: 18px;
                 transform: rotate(90deg);
                 font-size: 33px;
-                color: #fff;
+                color: #212121;
             }
 
             .notes-add-icon {
@@ -149,7 +155,7 @@
         position: absolute;
         top: -10px;
         right: 0;
-        color: #fff;
+        color: #212121;
         font-weight: 600;
         font-size: 14px;
     }
@@ -166,16 +172,16 @@
             height: 54px;
             border: none;
             box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.25);
-            background: #ffed4a;
+            background: #0a78d6;
             font-weight: 600;
             font-size: 20px;
-            color: #000;
+            color: #fff;
         }
 
         .cancel-name {
             font-weight: 600;
             font-size: 20px;
-            color: #fff;
+            color: #212121;
         }
     }
 }
@@ -200,11 +206,13 @@
             font-weight: 500;
             font-size: 16px;
             line-height: 150%;
-            color: #344054;
+            color: #0a78d6;
         }
         .confirm-btn {
-            box-shadow: 0 1px 2px 0 rgba(16, 24, 40, 0.05);
-            background: #005479;
+            box-shadow:
+            0px 0px 2px 0px rgba(0, 0, 0, 0.03),
+            0px 0px 2px 0px rgba(0, 0, 0, 0.06);
+            background: #0a78d6;
             border: none;
             font-weight: 500;
             font-size: 16px;
