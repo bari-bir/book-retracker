@@ -8,7 +8,11 @@ export const BookCard = ({ id, image, progressPage, page }: bookTrackerInfo) => 
     const navigate = useNavigate()
 
     const procentPage = () => {
-        return ((progressPage * 100) / page) | 0
+        if (progressPage < page) {
+            return ((progressPage * 100) / page) | 0
+        }
+
+        return 100
     }
 
     return (
@@ -21,9 +25,9 @@ export const BookCard = ({ id, image, progressPage, page }: bookTrackerInfo) => 
                 {progressPage !== 0 && (
                     <div className="procent-wrapper">
                         <div className="procent">
-                            <div className="line" style={{ width: procentPage()}} />
+                            <div className="line" style={{ width: `${procentPage()}%` }} />
                         </div>
-                        <p>{procentPage()}%</p>
+                        <p className="procent-text">{procentPage()}%</p>
                     </div>
                 )}
                 <PlayCircleOutlined className="book-icon" onClick={() => navigate(`/book-detail/${id}`)} />

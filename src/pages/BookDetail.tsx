@@ -147,9 +147,9 @@ export const BookDetail = () => {
                     <div className="action-block">
                         <span>
                             {isActive ? (
-                                <img className="img-timer" src={Pause} alt="pause" />
+                                <img className="img-timer" style={{ objectPosition: "center center" }} src={Pause} alt="pause" />
                             ) : (
-                                <img className="img-timer" src={Player} alt="player" />
+                                <img className="img-timer" style={{ objectPosition: "right bottom" }} src={Player} alt="player" />
                             )}
                         </span>
                     </div>
@@ -201,8 +201,8 @@ export const BookDetail = () => {
                             components: {
                                 Slider: {
                                     trackBg: "#0a78d6",
-                                    handleActiveColor: "#fff",
-                                    handleColor: "#fff",
+                                    handleActiveColor: "#212121",
+                                    handleColor: "#212121",
                                     railSize: 10,
                                     railBg: "#6d7885",
                                     handleLineWidth: 8,

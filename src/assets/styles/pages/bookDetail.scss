@@ -40,22 +40,17 @@
             display: grid;
             place-content: center;
             padding: 6px;
-            width: 53px;
-            height: 53px;
+            width: 50px;
+            height: 50px;
 
             span {
-                display: grid;
-                place-content: center;
-                background-color: #60b4d9;
-                height: 41px;
-                width: 41px;
-                border-radius: 100%;
-
                 .img-timer {
-                    width: 20px;
-                    height: 20px;
+                    display: grid;
+                    place-content: center;
+                    width: 40px;
+                    height: 40px;
                     object-fit: contain;
-                    object-position: center center;
+                    object-position: right center;
                 }
             }
         }
@@ -79,8 +74,8 @@
         justify-content: space-between;
         gap: 10px;
         box-shadow:
-        0px 0px 2px 0px rgba(0, 0, 0, 0.03),
-        0px 0px 2px 0px rgba(0, 0, 0, 0.06);
+            0px 0px 2px 0px rgba(0, 0, 0, 0.03),
+            0px 0px 2px 0px rgba(0, 0, 0, 0.06);
 
         .book-info {
             display: flex;
@@ -134,7 +129,7 @@
                 border-radius: 45px;
                 width: 42px;
                 height: 42px;
-                background-color: #fff;
+                background-color: #f7f9f6;
                 display: grid;
                 place-content: center;
 
@@ -153,11 +148,11 @@
 
     .page-number {
         position: absolute;
-        top: -10px;
+        top: -15px;
         right: 0;
         color: #212121;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 21px;
     }
 
     .actions {
@@ -210,8 +205,8 @@
         }
         .confirm-btn {
             box-shadow:
-            0px 0px 2px 0px rgba(0, 0, 0, 0.03),
-            0px 0px 2px 0px rgba(0, 0, 0, 0.06);
+                0px 0px 2px 0px rgba(0, 0, 0, 0.03),
+                0px 0px 2px 0px rgba(0, 0, 0, 0.06);
             background: #0a78d6;
             border: none;
             font-weight: 500;

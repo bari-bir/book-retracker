@@ -10,6 +10,7 @@
     width: calc(100% - 16px);
     height: 74px;
     padding: 0 8px;
+    z-index: 1000;
 
     a {
         flex: 1;
