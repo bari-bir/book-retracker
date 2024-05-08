@@ -9,11 +9,12 @@ import { Statistics } from "./pages/Statistics"
 import { Search } from "./pages/Search"
 import { CreateBook } from "./pages/CreateBook"
 import { BookDetail } from "./pages/BookDetail"
+import { Rating } from "./pages/Rating"
 
 function App() {
     return (
         <AntApp message={{ top: 30 }}>
-            <div style={{ width: "100%"}}>
+            <div style={{ width: "100%" }}>
                 <Fuse>
                     <Routes>
                         <Route path="/" element={<Home />} />
@@ -22,6 +23,7 @@ function App() {
                         <Route path="/search" element={<Search />} />
                         <Route path="/create-book/:id" element={<CreateBook />} />
                         <Route path="/book-detail/:id" element={<BookDetail />} />
+                        <Route path="/rating" element={<Rating />} />
                     </Routes>
                     <div style={{ height: 73 }} />
                     <TabbarMenu />

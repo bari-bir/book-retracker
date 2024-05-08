@@ -5,7 +5,7 @@ import { InputStyle } from "../components/InputStyle"
 import { App, Button, Input, Select } from "antd"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useCallback, useEffect, useState } from "react"
-import { bookStatusList, BooktrackerAPI } from "../api/booktrackerApi"
+import { bookStatusList, BooktrackerAPI, bookTrackerInfo } from "../api/booktrackerApi"
 import { CloudImage } from "../components/CloudImage"
 import { BookAPI } from "../api/bookApi"
 
@@ -40,7 +40,7 @@ export const CreateBook = () => {
     const bookId = queryParams.get("bookId")
     const [info, setInfo] = useState<bookInfo>({
         ..._infoTemp,
-        status: statusType,
+        status: statusType ? statusType : "reading",
     })
 
     const handlePostMessageListener = useCallback((message: MessageEvent) => {
@@ -54,9 +54,10 @@ export const CreateBook = () => {
                 id,
             }).then((res) => {
                 if (res.result_code === 0) {
-                    const bookTracker: bookInfo = JSON.parse(JSON.stringify(res.data))
+                    const bookTracker: bookTrackerInfo = JSON.parse(JSON.stringify(res.data))
                     setInfo({
                         ..._infoTemp,
+                        author: bookTracker.book.author,
                         ...bookTracker,
                     })
                 }
@@ -130,7 +131,7 @@ export const CreateBook = () => {
 
     return (
         <div className="container create-book">
-            <Header title="Add a book" />
+            <Header title={id === "add" ? "Add a book" : "Edit book"} />
 
             <div className="dragger">
                 {info.image?.length ? (
