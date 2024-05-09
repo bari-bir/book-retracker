@@ -56,30 +56,36 @@ export const Rating = () => {
                     </div>
                     <div className="ratingBox">
                         <div className="topPosition">
-                            <div className="topUserBlock">
-                                <CloudImage url={topTen[2].avatar} className="avatar-img" isPreview={false} />
-                                <span className="topJPID">{topTen.length >= 3 ? spliteText(topTen[2].fullName) : ""}</span>
-                            </div>
+                            {topTen.length >= 3 ? (
+                                <div className="topUserBlock">
+                                    <CloudImage url={topTen[2].avatar} className="avatar-img" isPreview={false} />
+                                    <span className="topJPID">{spliteText(topTen[2].fullName)}</span>
+                                </div>
+                            ) : null}
                             <div className="topPositionBox" style={{ height: 50, backgroundColor: "#cd7f32" }}>
                                 <img src={Model3} className="rateImg" />
                             </div>
                         </div>
 
                         <div className="topPosition">
-                            <div className="topUserBlock">
-                                <CloudImage url={topTen[0].avatar} className="avatar-img" isPreview={false} />
-                                <span className="topJPID">{topTen.length >= 1 ? spliteText(topTen[0].fullName) : ""}</span>
-                            </div>
+                            {topTen.length >= 1 ? (
+                                <div className="topUserBlock">
+                                    <CloudImage url={topTen[0].avatar} className="avatar-img" isPreview={false} />
+                                    <span className="topJPID">{topTen.length >= 1 ? spliteText(topTen[0].fullName) : ""}</span>
+                                </div>
+                            ) : null}
                             <div className="topPositionBox" style={{ height: 85, backgroundColor: "#e5b80b" }}>
                                 <img src={Model1} className="rateImg" />
                             </div>
                         </div>
 
                         <div className="topPosition">
-                            <div className="topUserBlock">
-                                <CloudImage url={topTen[1].avatar} className="avatar-img" />
-                                <span className="topJPID">{topTen.length >= 2 ? spliteText(topTen[1].fullName) : ""}</span>
-                            </div>
+                            {topTen.length >= 2 ? (
+                                <div className="topUserBlock">
+                                    <CloudImage url={topTen[1].avatar} className="avatar-img" />
+                                    <span className="topJPID">{topTen.length >= 2 ? spliteText(topTen[1].fullName) : ""}</span>
+                                </div>
+                            ) : null}
                             <div className="topPositionBox" style={{ height: 65, backgroundColor: "silver" }}>
                                 <img src={Model2} className="rateImg" />
                             </div>

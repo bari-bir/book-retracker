@@ -49,7 +49,7 @@ export const Home = () => {
                         </span>
                     </div>
                     <div style={{ width: "100%" }}>
-                        <Swiper slidesPerView={"auto"} spaceBetween={10}>
+                        <Swiper slidesPerView={"auto"}>
                             {bookTrackerList[status].map((booktracker) => (
                                 <SwiperSlide key={booktracker.id}>
                                     <BookCard {...booktracker} />

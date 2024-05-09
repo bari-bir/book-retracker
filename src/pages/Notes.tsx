@@ -6,12 +6,17 @@ import { useEffect, useState } from "react"
 import { noteInfo, NotesAPI } from "../api/notesApi"
 import TextArea from "antd/es/input/TextArea"
 
+const _popoverInfo = {
+    id: "",
+    isOpen: false,
+}
+
 export const Notes = () => {
     const { fetchData: fetchNotesData } = NotesAPI("my/list")
     const { fetchData: fetchNoteUpdateData } = NotesAPI("update")
     const { fetchData: fetchDeleteNoteData } = NotesAPI("delete")
     const [notesShow, setNotesShow] = useState<boolean>(false)
-    const [popoverOpen, setPopoverOpen] = useState<boolean>(false)
+    const [popoverOpen, setPopoverOpen] = useState<{ id: string; isOpen: boolean }>(_popoverInfo)
 
     const [dataList, setDataList] = useState<noteInfo[]>([])
     const [info, setInfo] = useState<{
@@ -40,8 +45,9 @@ export const Notes = () => {
     }
 
     const onDeleteNote = (id: string) => {
-        setPopoverOpen(false)
         if (!id.length) return
+
+        setPopoverOpen(_popoverInfo)
         fetchDeleteNoteData({
             id,
         }).then((res) => {
@@ -53,7 +59,7 @@ export const Notes = () => {
     }
 
     const onEditNotes = (note: noteInfo) => {
-        setPopoverOpen(false)
+        setPopoverOpen(_popoverInfo)
         setInfo({
             id: note.id,
             bookId: note.bookId,
@@ -75,7 +81,6 @@ export const Notes = () => {
 
     return (
         <div className="container notes">
-
             <div className="notes-wrapper">
                 {dataList.length ? (
                     dataList.map((item, i) => (
@@ -85,11 +90,24 @@ export const Notes = () => {
 
                             <Popover
                                 content={() => EditDeletePopover({ onDelete: () => onDeleteNote(item.id), onEdit: () => onEditNotes(item) })}
-                                onOpenChange={(e) => setPopoverOpen(e)}
-                                open={popoverOpen}
+                                onOpenChange={(e) =>
+                                    setPopoverOpen({
+                                        id: item.id,
+                                        isOpen: e,
+                                    })
+                                }
+                                open={popoverOpen.isOpen && popoverOpen.id === item.id}
                                 placement="bottomLeft"
                                 trigger="click">
-                                <MoreOutlined className="more-icon" onClick={() => setPopoverOpen(true)} />
+                                <MoreOutlined
+                                    className="more-icon"
+                                    onClick={() =>
+                                        setPopoverOpen({
+                                            id: item.id,
+                                            isOpen: true,
+                                        })
+                                    }
+                                />
                             </Popover>
                         </div>
                     ))

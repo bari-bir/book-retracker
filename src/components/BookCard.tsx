@@ -17,11 +17,11 @@ export const BookCard = ({ id, image, progressPage, page }: bookTrackerInfo) => 
 
     return (
         <div className="book-wrapper" onClick={() => navigate(`/book-detail/${id}`)}>
-            <CloudImage isPreview={false} className="book-img" url={image} height="100%" width="100%" />
+            <CloudImage isPreview={false} className="book-img" url={image} height={255} />
 
             <div
                 className="icon-wrapper"
-                style={{ borderRadius: progressPage !== 0 ? " 0 0 33px 33px" : "33px 0", width: progressPage !== 0 ? "100%" : 78 }}>
+                style={{ borderRadius: progressPage !== 0 ? " 0 0 12px 12px" : "12px 0", width: progressPage !== 0 ? "100%" : 78 }}>
                 {progressPage !== 0 && (
                     <div className="procent-wrapper">
                         <div className="procent">
