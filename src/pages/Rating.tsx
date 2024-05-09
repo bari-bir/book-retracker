@@ -35,52 +35,58 @@ export const Rating = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const spliteText = (text: string) => {
+        return text.length <= 6 ? text : `${text.slice(0, 4)}...`
+    }
+
     return (
         <div className="container rating">
-            <div className="leaderBoard">
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        padding: 8,
-                        backgroundColor: "#f5f5f5",
-                        borderRadius: 8,
-                        margin: "10px 0px",
-                    }}>
-                    <span className="header-text">The best results on Book tracker</span>
-                </div>
-                <div className="ratingBox">
-                    <div className="topPosition">
-                        <div className="topUserBlock">
-                            <CloudImage url={topTen[2].avatar} className="avatar-img" />
-                            <span className="topJPID">{topTen.length >= 3 ? topTen[2].fullName : ""}</span>
-                        </div>
-                        <div className="topPositionBox" style={{ height: 50, backgroundColor: "#cd7f32" }}>
-                            <img src={Model3} className="rateImg" />
-                        </div>
+            {topTen.length && (
+                <div className="leaderBoard">
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            padding: 8,
+                            backgroundColor: "#f5f5f5",
+                            borderRadius: 8,
+                            margin: "10px 0px",
+                        }}>
+                        <span className="header-text">The best results on Book tracker</span>
                     </div>
+                    <div className="ratingBox">
+                        <div className="topPosition">
+                            <div className="topUserBlock">
+                                <CloudImage url={topTen[2].avatar} className="avatar-img" isPreview={false} />
+                                <span className="topJPID">{topTen.length >= 3 ? spliteText(topTen[2].fullName) : ""}</span>
+                            </div>
+                            <div className="topPositionBox" style={{ height: 50, backgroundColor: "#cd7f32" }}>
+                                <img src={Model3} className="rateImg" />
+                            </div>
+                        </div>
 
-                    <div className="topPosition">
-                        <div className="topUserBlock">
-                            <CloudImage url={topTen[0].avatar} className="avatar-img" />
-                            <span className="topJPID">{topTen.length >= 1 ? topTen[0].fullName : ""}</span>
+                        <div className="topPosition">
+                            <div className="topUserBlock">
+                                <CloudImage url={topTen[0].avatar} className="avatar-img" isPreview={false} />
+                                <span className="topJPID">{topTen.length >= 1 ? spliteText(topTen[0].fullName) : ""}</span>
+                            </div>
+                            <div className="topPositionBox" style={{ height: 85, backgroundColor: "#e5b80b" }}>
+                                <img src={Model1} className="rateImg" />
+                            </div>
                         </div>
-                        <div className="topPositionBox" style={{ height: 85, backgroundColor: "#e5b80b" }}>
-                            <img src={Model1} className="rateImg" />
-                        </div>
-                    </div>
 
-                    <div className="topPosition">
-                        <div className="topUserBlock">
-                            <CloudImage url={topTen[1].avatar} className="avatar-img" />
-                            <span className="topJPID">{topTen.length >= 2 ? topTen[1].fullName : ""}</span>
-                        </div>
-                        <div className="topPositionBox" style={{ height: 65, backgroundColor: "silver" }}>
-                            <img src={Model2} className="rateImg" />
+                        <div className="topPosition">
+                            <div className="topUserBlock">
+                                <CloudImage url={topTen[1].avatar} className="avatar-img" />
+                                <span className="topJPID">{topTen.length >= 2 ? spliteText(topTen[1].fullName) : ""}</span>
+                            </div>
+                            <div className="topPositionBox" style={{ height: 65, backgroundColor: "silver" }}>
+                                <img src={Model2} className="rateImg" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            )}
             <div className="rating-wrapper">
                 {topTen
                     .slice(3, topTen.length)
@@ -88,7 +94,7 @@ export const Rating = () => {
                     .map((item, index) => (
                         <div key={item.id} className="rating-block">
                             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-                                <CloudImage url={item.avatar} className="userAvatar" />
+                                <CloudImage url={item.avatar} className="userAvatar" isPreview={false} />
                                 <p className="userName">{item.fullName}</p>
                             </div>
                             <p className="userPositionNumber">{index + 4}</p>
