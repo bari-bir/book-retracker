@@ -20,6 +20,7 @@ export interface IUser {
     lastLogin: string
     avatar: string
     followed: boolean
+    time: number
 }
 
 export const Rating = () => {
@@ -37,6 +38,22 @@ export const Rating = () => {
 
     const spliteText = (text: string) => {
         return text.length <= 6 ? text : `${text.slice(0, 4)}...`
+    }
+
+    const timeText = (time: number) => {
+        if (time < 10) {
+            return `0${time}`
+        } else {
+            return time
+        }
+    }
+    const timeConverter = (milliseconds: number) => {
+        console.log(milliseconds)
+        const hours = Math.floor(milliseconds / 3600000)
+        const minutes = Math.floor((milliseconds % 3600000) / 60000)
+        const seconds = Math.floor((milliseconds % 60000) / 1000)
+
+        return `${timeText(hours)}:${timeText(minutes)}:${timeText(seconds)}`
     }
 
     return (
@@ -60,6 +77,7 @@ export const Rating = () => {
                                 <div className="topUserBlock">
                                     <CloudImage url={topTen[2].avatar} className="avatar-img" isPreview={false} />
                                     <span className="topJPID">{spliteText(topTen[2].fullName)}</span>
+                                    {topTen.length >= 3 && <p className="time-text">{timeConverter(topTen[2].time)}</p>}
                                 </div>
                             ) : null}
                             <div className="topPositionBox" style={{ height: 50, backgroundColor: "#cd7f32" }}>
@@ -72,6 +90,7 @@ export const Rating = () => {
                                 <div className="topUserBlock">
                                     <CloudImage url={topTen[0].avatar} className="avatar-img" isPreview={false} />
                                     <span className="topJPID">{topTen.length >= 1 ? spliteText(topTen[0].fullName) : ""}</span>
+                                    {topTen.length >= 3 && <p className="time-text">{timeConverter(topTen[0].time)}</p>}
                                 </div>
                             ) : null}
                             <div className="topPositionBox" style={{ height: 85, backgroundColor: "#e5b80b" }}>
@@ -84,6 +103,7 @@ export const Rating = () => {
                                 <div className="topUserBlock">
                                     <CloudImage url={topTen[1].avatar} className="avatar-img" />
                                     <span className="topJPID">{topTen.length >= 2 ? spliteText(topTen[1].fullName) : ""}</span>
+                                    {topTen.length >= 3 && <p className="time-text">{timeConverter(topTen[1].time)}</p>}
                                 </div>
                             ) : null}
                             <div className="topPositionBox" style={{ height: 65, backgroundColor: "silver" }}>
@@ -99,11 +119,14 @@ export const Rating = () => {
                     .filter((item) => item.fullName.length)
                     .map((item, index) => (
                         <div key={item.id} className="rating-block">
-                            <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
-                                <CloudImage url={item.avatar} className="userAvatar" isPreview={false} />
-                                <p className="userName">{item.fullName}</p>
+                            <div>
+                                <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
+                                    <CloudImage url={item.avatar} className="userAvatar" isPreview={false} />
+                                    <p className="userName">{item.fullName}</p>
+                                </div>
+                                <p style={{ marginLeft: 45, marginTop: -5 }}>{timeConverter(item.time)}</p>
                             </div>
-                            <p className="userPositionNumber">{index + 4}</p>
+                            <p className="userPositionNumber">🏅{index + 4}</p>
                         </div>
                     ))}
             </div>
