@@ -100,13 +100,21 @@ export const Notes = () => {
         <div className="container notes">
             <div className="notes-wrapper">
                 <div className="notes-block">
-                    <div className="book-wrapper">
+                    <div className="book-notes-wrapper">
                         <div>
                             <CloudImage url="https://cdn.pixabay.com/photo/2022/12/01/04/35/sunset-7628294_640.jpg" className="book-img" />
                         </div>
                         <div className="book-info">
                             <h3 className="book-title">{splitText("Book title", 16)}</h3>
                             <p className="book-author">Mr.Alibi</p>
+                        </div>
+
+                        <div className="notes-info">
+                            <h3 className="note-title">Note</h3>
+                            <p className="note-text">
+                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium excepturi officia atque sed quas aut vel sunt
+                                assumenda fuga? Consectetur inventore eaque, autem quas architecto soluta asperiores non ipsam quam?
+                            </p>
                         </div>
                     </div>
                 </div>
