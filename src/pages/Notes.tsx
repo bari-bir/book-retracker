@@ -6,6 +6,8 @@ import { useEffect, useState } from "react"
 import { noteInfo, NotesAPI } from "../api/notesApi"
 import TextArea from "antd/es/input/TextArea"
 import { bookInfo } from "../api/booktrackerApi"
+import { CloudImage } from "../components/CloudImage"
+import { splitText } from "../helpers/splitText"
 
 interface INote {
     id: string
@@ -97,6 +99,17 @@ export const Notes = () => {
     return (
         <div className="container notes">
             <div className="notes-wrapper">
+                <div className="notes-block">
+                    <div className="book-wrapper">
+                        <div>
+                            <CloudImage url="https://cdn.pixabay.com/photo/2022/12/01/04/35/sunset-7628294_640.jpg" className="book-img" />
+                        </div>
+                        <div className="book-info">
+                            <h3 className="book-title">{splitText("Book title", 16)}</h3>
+                            <p className="book-author">Mr.Alibi</p>
+                        </div>
+                    </div>
+                </div>
                 {dataList.length ? (
                     dataList.map((item, i) => (
                         <div key={i} className="notes-block">
