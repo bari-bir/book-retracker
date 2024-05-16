@@ -30,8 +30,20 @@ export const BookCard = ({ id, image, progressPage, page }: bookTrackerInfo) => 
                         <p className="procent-text">{procentPage()}%</p>
                     </div>
                 )}
-                <PlayCircleOutlined className="book-icon" onClick={() => navigate(`/book-detail/${id}`)} />
-                <MessageOutlined className="book-icon" onClick={() => navigate("/notes")} />
+                <PlayCircleOutlined
+                    className="book-icon"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        navigate(`/book-detail/${id}`)
+                    }}
+                />
+                <MessageOutlined
+                    className="book-icon"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        navigate("/notes")
+                    }}
+                />
             </div>
         </div>
     )

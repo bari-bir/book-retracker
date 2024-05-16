@@ -10,6 +10,7 @@ import { useEffect, useState } from "react"
 import KeyWordImg from "../assets/images/keyword.png"
 import SearchOutlined from "@ant-design/icons/lib/icons/SearchOutlined"
 import { BooktrackerAPI, bookTrackerInfo, bookStatusList } from "../api/booktrackerApi"
+import { CloseOutlined } from "@ant-design/icons"
 
 export const Home = () => {
     const { fetchData: fetchBookTrackerData } = BooktrackerAPI("list")
@@ -36,10 +37,19 @@ export const Home = () => {
         return bookStatusList.find((bookStatus) => bookStatus.value === statusValue)?.label || ""
     }
 
+    const onCloseWin = () => {
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(JSON.stringify({ key: "closeWin" }))
+        }
+    }
+
     const statusList = Object.keys(bookTrackerList)
 
     return (
         <div className="home">
+            <div className="home-exit-btn" onClick={() => onCloseWin()}>
+                <CloseOutlined className="close-icon" />
+            </div>
             {statusList.map((status, i) => (
                 <div key={i}>
                     <div className="container home-header">

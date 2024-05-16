@@ -15,7 +15,6 @@ export const TabbarMenu = () => {
     const getTransform = (index: number) => {
         return 8 + index + (index * window.screen.width) / 4
     }
-
     return (
         <div className="tabbar">
             <div className="tabbar-animation" style={{ transform: `translateX(${getTransform(routeIndexInfo[location.pathname])}px)` }}></div>

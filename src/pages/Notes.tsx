@@ -5,6 +5,15 @@ import { EditDeletePopover } from "../components/EditDeletePopover"
 import { useEffect, useState } from "react"
 import { noteInfo, NotesAPI } from "../api/notesApi"
 import TextArea from "antd/es/input/TextArea"
+import { bookInfo } from "../api/booktrackerApi"
+
+interface INote {
+    id: string
+    userId: string
+    bookId: string
+    content: string
+    book?: bookInfo
+}
 
 const _popoverInfo = {
     id: "",
@@ -19,15 +28,20 @@ export const Notes = () => {
     const [popoverOpen, setPopoverOpen] = useState<{ id: string; isOpen: boolean }>(_popoverInfo)
 
     const [dataList, setDataList] = useState<noteInfo[]>([])
-    const [info, setInfo] = useState<{
-        id: string
-        userId: string
-        bookId: string
-        content: string
-    }>({
+    const [info, setInfo] = useState<INote>({
         id: "",
         userId: "",
         bookId: "",
+        book: {
+            id: "",
+            title: "",
+            author: "",
+            imageLink: "",
+            genres: [],
+            year: 0,
+            description: null,
+            page: 0,
+        },
         content: "",
     })
 
@@ -39,6 +53,7 @@ export const Notes = () => {
     const loadData = () => {
         fetchNotesData({}).then((res) => {
             if (res.result_code === 0) {
+                console.log(res.data)
                 setDataList(res.data)
             }
         })
