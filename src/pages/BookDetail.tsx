@@ -129,6 +129,22 @@ export const BookDetail = () => {
         })
     }
 
+    const openBookDetail = (bookId: string) => {
+        if (!bookId) return
+
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(
+                JSON.stringify({
+                    key: "route",
+                    data: {
+                        name: "BookDetail",
+                        id: bookId,
+                    },
+                }),
+            )
+        }
+    }
+
     return (
         <div className="container book-detail">
             <Header isAcceptGoBack={onGoBack} />
@@ -157,7 +173,7 @@ export const BookDetail = () => {
                 </div>
             </div>
 
-            <div className="book-card">
+            <div className="book-card" onClick={() => openBookDetail(bookTrackerInfo?.book.id || "")}>
                 <div className="book-info">
                     <CloudImage url={bookTrackerInfo?.image || ""} className="book-img" height={87} />
 
@@ -184,10 +200,21 @@ export const BookDetail = () => {
                             onOpenChange={(e) => setPopoverOpen(e)}
                             placement="bottomLeft"
                             trigger="click">
-                            <MoreOutlined className="more-icon" onClick={() => setPopoverOpen(true)} />
+                            <MoreOutlined
+                                className="more-icon"
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    setPopoverOpen(true)
+                                }}
+                            />
                         </Popover>
                     </div>
-                    <div className="notes-add-icon" onClick={() => setNotesShow(true)}>
+                    <div
+                        className="notes-add-icon"
+                        onClick={(e) => {
+                            e.stopPropagation()
+                            setNotesShow(true)
+                        }}>
                         <img src={NotesAddImg} className="notes-add-img" alt="notes" />
                     </div>
                 </div>

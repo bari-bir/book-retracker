@@ -7,7 +7,8 @@ import { noteInfo, NotesAPI } from "../api/notesApi"
 import TextArea from "antd/es/input/TextArea"
 import { bookInfo } from "../api/booktrackerApi"
 import { CloudImage } from "../components/CloudImage"
-import { splitText } from "../helpers/splitText"
+import { BookOutlined, StarOutlined } from "@ant-design/icons"
+import { useNavigate } from "react-router-dom"
 
 interface INote {
     id: string
@@ -23,12 +24,13 @@ const _popoverInfo = {
 }
 
 export const Notes = () => {
+    const navigate = useNavigate()
     const { fetchData: fetchNotesData } = NotesAPI("my/list")
     const { fetchData: fetchNoteUpdateData } = NotesAPI("update")
     const { fetchData: fetchDeleteNoteData } = NotesAPI("delete")
     const [notesShow, setNotesShow] = useState<boolean>(false)
     const [popoverOpen, setPopoverOpen] = useState<{ id: string; isOpen: boolean }>(_popoverInfo)
-
+    const [showMore, setShowMore] = useState<{ [key: string]: boolean }>({})
     const [dataList, setDataList] = useState<noteInfo[]>([])
     const [info, setInfo] = useState<INote>({
         id: "",
@@ -55,7 +57,6 @@ export const Notes = () => {
     const loadData = () => {
         fetchNotesData({}).then((res) => {
             if (res.result_code === 0) {
-                console.log(res.data)
                 setDataList(res.data)
             }
         })
@@ -96,55 +97,77 @@ export const Notes = () => {
         })
     }
 
+    const isFloatRaging = (rating: number) => {
+        return Number(rating) === rating && (rating || 0) % 1 !== 0
+    }
+
     return (
         <div className="container notes">
             <div className="notes-wrapper">
-                <div className="notes-block">
-                    <div className="book-notes-wrapper">
-                        <div>
-                            <CloudImage url="https://cdn.pixabay.com/photo/2022/12/01/04/35/sunset-7628294_640.jpg" className="book-img" />
-                        </div>
-                        <div className="book-info">
-                            <h3 className="book-title">{splitText("Book title", 16)}</h3>
-                            <p className="book-author">Mr.Alibi</p>
-                        </div>
-
-                        <div className="notes-info">
-                            <h3 className="note-title">Note</h3>
-                            <p className="note-text">
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Praesentium excepturi officia atque sed quas aut vel sunt
-                                assumenda fuga? Consectetur inventore eaque, autem quas architecto soluta asperiores non ipsam quam?
-                            </p>
-                        </div>
-                    </div>
-                </div>
                 {dataList.length ? (
-                    dataList.map((item, i) => (
-                        <div key={i} className="notes-block">
-                            <h3 className="note-title">{item.book.title || "-"}</h3>
-                            <p className="note-descr">{item.content}</p>
+                    dataList.map((item) => (
+                        <div
+                            key={item.id}
+                            className="notes-block"
+                            style={{ padding: "16px 0" }}
+                            onClick={() => setShowMore((showMore) => ({ [item.id]: !showMore[item.id] }))}>
+                            <div className="book-notes-wrapper">
+                                <div>
+                                    <CloudImage url={item.book.imageLink} className="book-img" />
+                                </div>
+                                <div className="book-info">
+                                    <h3 className="book-title">{item.book.title}</h3>
+                                    <p className="book-author">{item.book.author}</p>
 
-                            <Popover
-                                content={() => EditDeletePopover({ onDelete: () => onDeleteNote(item.id), onEdit: () => onEditNotes(item) })}
-                                onOpenChange={(e) =>
-                                    setPopoverOpen({
-                                        id: item.id,
-                                        isOpen: e,
-                                    })
-                                }
-                                open={popoverOpen.isOpen && popoverOpen.id === item.id}
-                                placement="bottomLeft"
-                                trigger="click">
-                                <MoreOutlined
-                                    className="more-icon"
-                                    onClick={() =>
+                                    <div className="book-rating">
+                                        <StarOutlined className="star-icon" />
+                                        <span className="rating-number-text">
+                                            {isFloatRaging(item.book.rating || 0) ? item.book.rating?.toFixed(2) : item.book.rating}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div
+                                    className="book-navigate-block"
+                                    onClick={(e) => {
+                                        e.stopPropagation()
+                                        navigate(`/book-detail/${item.book.id}`)
+                                    }}>
+                                    <BookOutlined className="book-icon" />
+                                </div>
+                            </div>
+                            <div className="notes-info">
+                                <h3 className="note-title">Note</h3>
+                                <p
+                                    className="note-text"
+                                    style={{
+                                        overflow: showMore[item.id] ? "auto" : "hidden",
+                                        display: showMore[item.id] ? "block" : "-webkit-box",
+                                    }}>
+                                    {item.content}
+                                </p>
+                                <Popover
+                                    content={() => EditDeletePopover({ onDelete: () => onDeleteNote(item.id), onEdit: () => onEditNotes(item) })}
+                                    onOpenChange={(e) =>
                                         setPopoverOpen({
                                             id: item.id,
-                                            isOpen: true,
+                                            isOpen: e,
                                         })
                                     }
-                                />
-                            </Popover>
+                                    open={popoverOpen.isOpen && popoverOpen.id === item.id}
+                                    placement="bottomLeft"
+                                    trigger="click">
+                                    <MoreOutlined
+                                        className="more-icon"
+                                        onClick={(e) => {
+                                            e.stopPropagation()
+                                            setPopoverOpen({
+                                                id: item.id,
+                                                isOpen: true,
+                                            })
+                                        }}
+                                    />
+                                </Popover>
+                            </div>
                         </div>
                     ))
                 ) : (

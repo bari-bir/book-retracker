@@ -29,6 +29,7 @@ export type bookInfo = {
     year: number
     description: null | string
     page: number
+    rating?: number
 }
 
 interface IBooktracker extends IResponse {
