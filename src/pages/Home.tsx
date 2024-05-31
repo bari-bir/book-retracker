@@ -71,6 +71,7 @@ export const Home = () => {
             ))}
 
             <Drawer
+                style={{ borderRadius: "18px 18px 0 0" }}
                 placement="bottom"
                 title="Add a book"
                 closable={false}
