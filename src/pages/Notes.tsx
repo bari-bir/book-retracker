@@ -7,8 +7,7 @@ import { noteInfo, NotesAPI } from "../api/notesApi"
 import TextArea from "antd/es/input/TextArea"
 import { bookInfo } from "../api/booktrackerApi"
 import { CloudImage } from "../components/CloudImage"
-import { BookOutlined, StarOutlined } from "@ant-design/icons"
-import { useNavigate } from "react-router-dom"
+import { StarOutlined } from "@ant-design/icons"
 
 interface INote {
     id: string
@@ -24,7 +23,6 @@ const _popoverInfo = {
 }
 
 export const Notes = () => {
-    const navigate = useNavigate()
     const { fetchData: fetchNotesData } = NotesAPI("my/list")
     const { fetchData: fetchNoteUpdateData } = NotesAPI("update")
     const { fetchData: fetchDeleteNoteData } = NotesAPI("delete")
@@ -125,14 +123,6 @@ export const Notes = () => {
                                             {isFloatRaging(item.book.rating || 0) ? item.book.rating?.toFixed(2) : item.book.rating}
                                         </span>
                                     </div>
-                                </div>
-                                <div
-                                    className="book-navigate-block"
-                                    onClick={(e) => {
-                                        e.stopPropagation()
-                                        navigate(`/book-detail/${item.book.id}`)
-                                    }}>
-                                    <BookOutlined className="book-icon" />
                                 </div>
                             </div>
                             <div className="notes-info">

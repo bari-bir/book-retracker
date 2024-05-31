@@ -23,8 +23,8 @@ export const BookDetail = () => {
     const { fetchData: fetchSaveBookTrackerDeleteData } = BooktrackerAPI("delete")
     const { message } = App.useApp()
     const [isActive, setIsActive] = useState<boolean>(false)
-    const [isSave, setIsSave] = useState(false)
-    const [saveShow, setSaveShow] = useState<boolean>(false)
+    const [isSave, setIsSave] = useState(true)
+    // const [saveShow, setSaveShow] = useState<boolean>(false)
     const [drawerShow, setDrawerShow] = useState<boolean>(false)
     const [warningShow, setWarningShow] = useState<boolean>(false)
     const [notesShow, setNotesShow] = useState<boolean>(false)
@@ -76,7 +76,7 @@ export const BookDetail = () => {
         if (isSave) {
             return true
         } else {
-            setSaveShow(true)
+            // setSaveShow(true)
             return false
         }
     }
@@ -138,7 +138,9 @@ export const BookDetail = () => {
                     key: "route",
                     data: {
                         name: "BookDetail",
-                        id: bookId,
+                        params: {
+                            id: bookId,
+                        },
                     },
                 }),
             )
@@ -220,7 +222,13 @@ export const BookDetail = () => {
                 </div>
             </div>
 
-            <Drawer placement="bottom" title="How many page" closable={false} onClose={() => setDrawerShow(false)} open={drawerShow}>
+            <Drawer
+                style={{ borderRadius: "18px 18px 0 0" }}
+                placement="bottom"
+                title="How many page"
+                closable={false}
+                onClose={() => setDrawerShow(false)}
+                open={drawerShow}>
                 <div className="drawer-save-block">
                     <p className="page-number">{readPage}</p>
                     <ConfigProvider
@@ -255,7 +263,7 @@ export const BookDetail = () => {
                 </div>
             </Drawer>
             {/* save modal */}
-            <Modal
+            {/* <Modal
                 className="modal-warning"
                 open={saveShow}
                 onCancel={() => setSaveShow(false)}
@@ -271,7 +279,7 @@ export const BookDetail = () => {
                     <img className="warning-img" src={WarningImg} alt="test" />
                     <p>Without saving?</p>
                 </div>
-            </Modal>
+            </Modal> */}
             {/* book delete modal */}
             <Modal
                 className="modal-warning"

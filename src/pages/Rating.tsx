@@ -56,6 +56,25 @@ export const Rating = () => {
         return `${timeText(hours)}:${timeText(minutes)}:${timeText(seconds)}`
     }
 
+    const openUserProfile = (userId: string, followed: boolean) => {
+        if (!userId) return
+
+        if (window.ReactNativeWebView) {
+            window.ReactNativeWebView.postMessage(
+                JSON.stringify({
+                    key: "route",
+                    data: {
+                        name: "UserProfile",
+                        params: {
+                            id: userId,
+                            isFollow: followed,
+                        },
+                    },
+                }),
+            )
+        }
+    }
+
     return (
         <div className="container rating">
             {topTen.length && (
@@ -74,7 +93,7 @@ export const Rating = () => {
                     <div className="ratingBox">
                         <div className="topPosition">
                             {topTen.length >= 3 ? (
-                                <div className="topUserBlock">
+                                <div className="topUserBlock" onClick={() => openUserProfile(topTen[2].id, topTen[2].followed)}>
                                     <CloudImage url={topTen[2].avatar} className="avatar-img" isPreview={false} />
                                     <span className="topJPID">{spliteText(topTen[2].fullName)}</span>
                                     {topTen.length >= 3 && <p className="time-text">{timeConverter(topTen[2].time)}</p>}
@@ -87,7 +106,7 @@ export const Rating = () => {
 
                         <div className="topPosition">
                             {topTen.length >= 1 ? (
-                                <div className="topUserBlock">
+                                <div className="topUserBlock" onClick={() => openUserProfile(topTen[0].id, topTen[0].followed)}>
                                     <CloudImage url={topTen[0].avatar} className="avatar-img" isPreview={false} />
                                     <span className="topJPID">{topTen.length >= 1 ? spliteText(topTen[0].fullName) : ""}</span>
                                     {topTen.length >= 3 && <p className="time-text">{timeConverter(topTen[0].time)}</p>}
@@ -100,8 +119,8 @@ export const Rating = () => {
 
                         <div className="topPosition">
                             {topTen.length >= 2 ? (
-                                <div className="topUserBlock">
-                                    <CloudImage url={topTen[1].avatar} className="avatar-img" />
+                                <div className="topUserBlock" onClick={() => openUserProfile(topTen[1].id, topTen[1].followed)}>
+                                    <CloudImage url={topTen[1].avatar} className="avatar-img" isPreview={false} />
                                     <span className="topJPID">{topTen.length >= 2 ? spliteText(topTen[1].fullName) : ""}</span>
                                     {topTen.length >= 3 && <p className="time-text">{timeConverter(topTen[1].time)}</p>}
                                 </div>
@@ -118,7 +137,7 @@ export const Rating = () => {
                     .slice(3, topTen.length)
                     .filter((item) => item.fullName.length)
                     .map((item, index) => (
-                        <div key={item.id} className="rating-block">
+                        <div key={item.id} className="rating-block" onClick={() => openUserProfile(item.id, item.followed)}>
                             <div>
                                 <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 5 }}>
                                     <CloudImage url={item.avatar} className="userAvatar" isPreview={false} />
